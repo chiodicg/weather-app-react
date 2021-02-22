@@ -1,0 +1,17 @@
+.Footer {
+  color: #22566b;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.Footer a {
+  color: #2982a5;
+}
+
+.Footer a:hover {
+  color: #2982a5;
+}
+
+.Footer a:visited {
+  color: #22566b;
+}

@@ -1,0 +1,54 @@
+.Search .go {
+  background-color: #62caf7;
+  border: 1px solid #62caf7;
+}
+.Search .go:hover {
+  background-color: #377792;
+  border: 1px solid #377792;
+}
+
+.Search .geolocation {
+  border: 1px solid #377792;
+  color: #377792;
+}
+
+.Search .geolocation:hover {
+  background-color: #377792;
+  border: 1px solid #377792;
+  color: #f4efed;
+}
+
+.Today h2 {
+  color: #22566b;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Today .today {
+  color: #22566b;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Today .humid-wind {
+  font-size: 20px;
+  color: #22566b;
+  text-align: center;
+}
+
+.Today .description {
+  text-transform: capitalize;
+}
+
+.Today .date-time,
+.Today .description {
+  color: #22566b;
+  font-size: 20px;
+  text-align: center;
+}
+
+.Today #max-min-today {
+  font-size: 15px;
+  color: #22566b;
+  text-align: center;
+}
