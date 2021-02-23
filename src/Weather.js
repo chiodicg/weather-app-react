@@ -3,18 +3,12 @@ import axios from 'axios';
 
 import "./Weather.css";
 
-export default function Weather() {
-  const [city, setCity] = useState("");
-  const [weather, setWeather] = useState({
-    city: "Dundee",
-    description: "Light snow",
-    icon: "https://ssl.gstatic.com/onebox/weather/64/snow_light.png",
-    humidity: 93,
-    wind: 9,
-    temperature: -1,
-    maxTemp: 0,
-    minTemp: -2,
-    date: formatDate(Date.now())});
+export default function Weather(props) {
+  const [city, setCity] = useState(props.city);
+  const [weather, setWeather] = useState({ ready: false});
+  const apiKey = "7de7d337ce8802b808862965eb088195";
+  const [units, setUnits] = useState("metric");
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
 
   function formatDate(timestamp) {
     let date = new Date(timestamp);
@@ -42,7 +36,8 @@ export default function Weather() {
 
   function showTemperature(response) {
     setWeather({
-      city: city,
+      ready: true,
+      city: response.data.name,
       temperature: response.data.main.temp,
       description: response.data.weather[0].description,
       humidity: response.data.main.humidity,
@@ -57,9 +52,6 @@ export default function Weather() {
   function handleSubmit(event) {
     event.preventDefault();
     if (city.length > 0) {
-      let apiKey = "7de7d337ce8802b808862965eb088195";
-      let units = "metric";
-      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
       axios.get(apiUrl).then(showTemperature);
     } else {
       alert(`Enter a city`);
@@ -71,37 +63,40 @@ export default function Weather() {
     setCity(event.target.value);
   }
 
-  return (
-  <div className="Weather">
-    <div className="Search">
-      <form
-          className="row align-items-center"
+  if (weather.ready) {
+    return (
+    <div className="Weather">
+      <div className="Search ">
+        <form
           id="search-form"
           onSubmit={handleSubmit}
         >
-          <div className="col-7 form-group">
-            <input
+          <div className="row align-items-center">
+            <div className="col-7">
+              <input
               type="search"
               className="form-control"
               id="search-input"
               placeholder="Enter city"
+              autoFocus="on"
               onChange={updateCity}
-            />
-          </div>
-          <div className="col-3">
-            <button type="submit" className="btn btn-success go">
+              />
+            </div>
+            <div className="col-3">
+              <button type="submit" className="btn btn-success go">
             Search
-            </button>
-            <button type="button" className="btn btn-outline-info geolocation">
-              <i className="fas fa-globe"></i>
-            </button>
-          </div>
+              </button>
+              <button type="button" className="btn btn-outline-info geolocation">
+                <i className="fas fa-globe"></i>
+              </button>
+            </div>
           <div className="col-2">
-            <button type="button" className="btn btn-light" id="degrees-link">
+            <button type="button" className="btn btn-light w-100" id="degrees-link">
             ºC / ºF
             </button>
           </div>
-        </form>
+        </div>
+      </form>
         </div>
         <br />
     <div className="Today">
@@ -111,7 +106,7 @@ export default function Weather() {
           <div className="description">{weather.description}</div>
           <div className="date-time">{weather.date}</div>
           <div className="humid-wind">
-            {weather.humidity}% humidity, {weather.wind} km/h
+            {weather.humidity}% humidity, {Math.round(weather.wind)} km/h
           </div>
         </div>
         <div className="col-md today">
@@ -126,4 +121,8 @@ export default function Weather() {
       </div>
     </div>
     </div>)
+    } else {
+      axios.get(apiUrl).then(showTemperature);
+      return ("Loading...")
+    }
 }

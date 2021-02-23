@@ -4,6 +4,7 @@
   border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   padding: 50px;
-  margin: 30px;
+  margin: 30px auto 15px;
+  width: 800px;
   text-align: center;
 }
