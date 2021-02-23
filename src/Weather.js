@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Loader from "react-loader-spinner";
 
 import "./Weather.css";
 
@@ -123,6 +124,8 @@ export default function Weather(props) {
     </div>)
     } else {
       axios.get(apiUrl).then(showTemperature);
-      return ("Loading...")
+      return (<div className="loading">Loading...
+      <br />
+      <Loader type="ThreeDots" color="#4dbbea" height={80} width={80} timeout={10}/></div>)
     }
 }
