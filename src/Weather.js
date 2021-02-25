@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
+import FormattedDate from "./FormattedDate";
 
 import "./Weather.css";
 
@@ -10,30 +11,6 @@ export default function Weather(props) {
   const apiKey = "7de7d337ce8802b808862965eb088195";
   const [units, setUnits] = useState("metric");
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-
-  function formatDate(timestamp) {
-    let date = new Date(timestamp);
-    let hour = date.getHours();
-    if (hour < 10) {hour = `0${hour}`}
-    let minutes = date.getMinutes();
-    if (minutes < 10) {minutes = `0${minutes}`}
-    return `${weekday(timestamp)}, ${hour}:${minutes}`;
-  }
-
-  function weekday(timestamp) {
-    let date = new Date(timestamp);
-    let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-  ];
-   let day = days[date.getDay()];
-   return `${day}`;
-  }
 
   function showTemperature(response) {
     setWeather({
@@ -46,7 +23,7 @@ export default function Weather(props) {
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       maxTemp: response.data.main.temp_max,
       minTemp: response.data.main.temp_min,
-      date: formatDate(response.data.dt * 1000)
+      date: new Date(response.data.dt * 1000)
     });
   }
 
@@ -105,7 +82,9 @@ export default function Weather(props) {
         <div className="col-md place">
           <h2>{weather.city}</h2>
           <div className="description">{weather.description}</div>
-          <div className="date-time">{weather.date}</div>
+          <div className="date-time">
+            <FormattedDate date={weather.date}/>
+          </div>
           <div className="humid-wind">
             {weather.humidity}% humidity, {Math.round(weather.wind)} km/h
           </div>
