@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
-import FormattedDate from "./FormattedDate";
+import Today from "./Today";
 
 import "./Weather.css";
 
 export default function Weather(props) {
   const [city, setCity] = useState(props.city);
   const [weather, setWeather] = useState({ ready: false});
-  const apiKey = "7de7d337ce8802b808862965eb088195";
-  const [units, setUnits] = useState("metric");
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+  
+  let units = "metric";
+  /*const [units, setUnits] = useState("metric");*/
 
   function showTemperature(response) {
     setWeather({
@@ -26,11 +26,17 @@ export default function Weather(props) {
       date: new Date(response.data.dt * 1000)
     });
   }
+  
+  function search() {
+    const apiKey = "7de7d337ce8802b808862965eb088195";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(showTemperature);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
     if (city.length > 0) {
-      axios.get(apiUrl).then(showTemperature);
+      search();
     } else {
       alert(`Enter a city`);
     }
@@ -77,32 +83,11 @@ export default function Weather(props) {
       </form>
         </div>
         <br />
-    <div className="Today">
-      <div className="row align-items-center details">
-        <div className="col-md place">
-          <h2>{weather.city}</h2>
-          <div className="description">{weather.description}</div>
-          <div className="date-time">
-            <FormattedDate date={weather.date}/>
-          </div>
-          <div className="humid-wind">
-            {weather.humidity}% humidity, {Math.round(weather.wind)} km/h
-          </div>
-        </div>
-        <div className="col-md today">
-          <span id="today">Today</span>
-          <br />
-          <img src={weather.icon} alt={weather.description} />{" "}
-          {Math.round(weather.temperature)}ºC
-          <div className="temp" id="max-min-today">
-            Max: {Math.round(weather.maxTemp)}ºC, Min: {Math.round(weather.minTemp)}ºC
-          </div>
-        </div>
-      </div>
+        <Today data={weather} />
     </div>
-    </div>)
+    )
     } else {
-      axios.get(apiUrl).then(showTemperature);
+      search()
       return (<div className="loading">Loading...
       <br />
       <Loader type="ThreeDots" color="#4dbbea" height={80} width={80} timeout={10}/></div>)
