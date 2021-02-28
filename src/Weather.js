@@ -20,13 +20,13 @@ export default function Weather(props) {
       description: response.data.weather[0].description,
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      icon: response.data.weather[0].icon,
       maxTemp: response.data.main.temp_max,
       minTemp: response.data.main.temp_min,
       date: new Date(response.data.dt * 1000)
     });
   }
-  
+
   function search() {
     const apiKey = "7de7d337ce8802b808862965eb088195";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;

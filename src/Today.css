@@ -1,0 +1,52 @@
+.Today h2 {
+  color: #22566b;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Today .today {
+  color: #22566b;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Today #today {
+  font-weight: bold;
+}
+
+.Today .humid-wind {
+  font-size: 20px;
+  color: #22566b;
+  text-align: center;
+}
+
+.Today .today-temperature {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  line-height: 50px;
+  font-size: 35px;
+}
+
+.Today #today-temperature {
+  font-size: 35px;
+  padding-left: 15px;
+}
+
+.Today .description {
+  text-transform: capitalize;
+}
+
+.Today .date-time,
+.Today .description {
+  color: #22566b;
+  font-size: 20px;
+  text-align: center;
+}
+
+.Today #max-min-today {
+  font-size: 15px;
+  color: #22566b;
+  text-align: center;
+}
