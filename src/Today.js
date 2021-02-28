@@ -14,7 +14,7 @@ export default function Today(props) {
         <FormattedDate date={props.data.date}/>
         </div>
         <div className="humid-wind">
-          {props.data.humidity}% humidity, {Math.round(props.data.wind)} km/h
+          {props.data.humidity}% humidity, {Math.round(props.data.wind)} <span className="units">{props.windUnit}</span>
         </div>
       </div>
       <div className="col-md today">
@@ -22,10 +22,10 @@ export default function Today(props) {
         <div className="today-temperature">
           <span className="icon">
           <Icons code={props.data.icon} /></span>
-          <span id="today-temperature">{Math.round(props.data.temperature)}ºC</span>
+          <span id="temperature">{Math.round(props.data.temperature)}</span><span className="units">{props.unit}</span>
         </div>
         <div className="temp" id="max-min-today">
-          Max: {Math.round(props.data.maxTemp)}ºC, Min: {Math.round(props.data.minTemp)}ºC
+          Max: {Math.round(props.data.maxTemp)}<span className="units">{props.unit}</span>, Min: {Math.round(props.data.minTemp)}<span className="units">{props.unit}</span>
         </div>
       </div>
     </div>

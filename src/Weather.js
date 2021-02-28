@@ -8,9 +8,9 @@ import "./Weather.css";
 export default function Weather(props) {
   const [city, setCity] = useState(props.city);
   const [weather, setWeather] = useState({ ready: false});
-  
-  let units = "metric";
-  /*const [units, setUnits] = useState("metric");*/
+  const [unit, setUnit] = useState("metric");
+  const [windUnit, setWindUnit] = useState("km/h");
+  const [degree, setDegree] = useState("ºC");
 
   function showTemperature(response) {
     setWeather({
@@ -29,7 +29,7 @@ export default function Weather(props) {
 
   function search() {
     const apiKey = "7de7d337ce8802b808862965eb088195";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
     axios.get(apiUrl).then(showTemperature);
   }
 
@@ -45,6 +45,22 @@ export default function Weather(props) {
   function updateCity(event) {
     event.preventDefault();
     setCity(event.target.value);
+  }
+
+  function convertToFahrenheit(event) {
+    event.preventDefault();
+    setUnit("imperial");
+    setDegree("ºF");
+    setWindUnit("m/h");
+    search();
+  }
+  
+  function convertToCelsius(event) {
+    event.preventDefault();
+    setUnit("metric");
+    setDegree("ºC");
+    setWindUnit("km/h");
+    search();
   }
 
   if (weather.ready) {
@@ -74,16 +90,21 @@ export default function Weather(props) {
                 <i className="fas fa-globe"></i>
               </button>
             </div>
-          <div className="col-2">
-            <button type="button" className="btn btn-light w-100" id="degrees-link">
-            ºC / ºF
+          <div className="col-1">
+            <button type="button" className="btn btn-light" onClick={convertToCelsius}>
+            ºC
+            </button>
+          </div>
+          <div className="col-1">
+            <button type="button" className="btn btn-light" onClick={convertToFahrenheit}>
+            ºF
             </button>
           </div>
         </div>
       </form>
         </div>
         <br />
-        <Today data={weather} />
+        <Today data={weather} unit={degree} windUnit={windUnit}/>
     </div>
     )
     } else {
