@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import Today from "./Today";
@@ -52,8 +52,13 @@ export default function Weather(props) {
     setUnit("imperial");
     setDegree("ºF");
     setWindUnit("m/h");
-    search();
+    console.log({unit});
+    console.log({degree});
   }
+
+  useEffect(() => {
+    search()
+  }, [unit]);
   
   function convertToCelsius(event) {
     event.preventDefault();
