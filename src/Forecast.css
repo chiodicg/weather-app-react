@@ -1,0 +1,32 @@
+.Forecast {
+  color: #22566b;
+}
+
+.Forecast h2 {
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Forecast .forecast-days {
+  font-size: 30px;
+  text-align: center;
+}
+
+.Forecast .forecast-temperature {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  line-height: 50px;
+  font-size: 35px;
+}
+
+.Forecast #temperature {
+  padding-left: 15px;
+}
+
+.Forecast .max-min {
+  font-size: 15px;
+  color: #22566b;
+  text-align: center;
+}

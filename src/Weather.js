@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import Today from "./Today";
+import Forecast from "./Forecast";
 
 import "./Weather.css";
 
@@ -23,7 +24,9 @@ export default function Weather(props) {
       icon: response.data.weather[0].icon,
       maxTemp: response.data.main.temp_max,
       minTemp: response.data.main.temp_min,
-      date: new Date(response.data.dt * 1000)
+      date: new Date(response.data.dt * 1000),
+      lat: response.data.coord.lat,
+      lon: response.data.coord.lon
     });
   }
 
@@ -56,9 +59,7 @@ export default function Weather(props) {
     console.log({degree});
   }
 
-  useEffect(() => {
-    search()
-  }, [unit]);
+  useEffect(search, [unit]);
   
   function convertToCelsius(event) {
     event.preventDefault();
@@ -109,7 +110,9 @@ export default function Weather(props) {
       </form>
         </div>
         <br />
-        <Today data={weather} unit={degree} windUnit={windUnit}/>
+        <Today data={weather} degreeUnit={degree} windUnit={windUnit}/>
+        <br />
+        <Forecast lat={weather.lat} lon={weather.lon} unit={unit} degreeUnit={degree} />
     </div>
     )
     } else {

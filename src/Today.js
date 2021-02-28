@@ -18,14 +18,14 @@ export default function Today(props) {
         </div>
       </div>
       <div className="col-md today">
-        <span id="today">Today</span>
+        <h2>Today</h2>
         <div className="today-temperature">
           <span className="icon">
           <Icons code={props.data.icon} /></span>
-          <span id="temperature">{Math.round(props.data.temperature)}</span><span className="units">{props.unit}</span>
+          <span id="temperature">{Math.round(props.data.temperature)}</span><span className="units">{props.degreeUnit}</span>
         </div>
         <div className="temp" id="max-min-today">
-          Max: {Math.round(props.data.maxTemp)}<span className="units">{props.unit}</span>, Min: {Math.round(props.data.minTemp)}<span className="units">{props.unit}</span>
+          Max: {Math.round(props.data.maxTemp)}<span className="units">{props.degreeUnit}</span>, Min: {Math.round(props.data.minTemp)}<span className="units">{props.degreeUnit}</span>
         </div>
       </div>
     </div>
