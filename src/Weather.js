@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import Today from "./Today";
@@ -55,15 +55,17 @@ export default function Weather(props) {
     setUnit("imperial");
     setDegree("ºF");
     setWindUnit("m/h");
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weather.city}&appid=${apiKey}&units=imperial`;
+    axios.get(apiUrl).then(showTemperature);
   }
-
-  useEffect(search, [unit]);
   
   function convertToCelsius(event) {
     event.preventDefault();
     setUnit("metric");
     setDegree("ºC");
     setWindUnit("km/h");
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weather.city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showTemperature);
   }
 
   function getCurrentLocation(position) {
