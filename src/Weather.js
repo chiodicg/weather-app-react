@@ -12,6 +12,7 @@ export default function Weather(props) {
   const [unit, setUnit] = useState("metric");
   const [windUnit, setWindUnit] = useState("km/h");
   const [degree, setDegree] = useState("ºC");
+  const apiKey = "7de7d337ce8802b808862965eb088195";
 
   function showTemperature(response) {
     setWeather({
@@ -31,7 +32,6 @@ export default function Weather(props) {
   }
 
   function search() {
-    const apiKey = "7de7d337ce8802b808862965eb088195";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
     axios.get(apiUrl).then(showTemperature);
   }
@@ -69,6 +69,19 @@ export default function Weather(props) {
     search();
   }
 
+  function getCurrentLocation(position) {
+    console.log(position)
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    let apiGeoUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiGeoUrl).then(showTemperature);
+  }
+
+  function getGeolocation(event) {
+    event.preventDefault()
+    navigator.geolocation.getCurrentPosition(getCurrentLocation)
+  }
+
   if (weather.ready) {
     return (
     <div className="Weather">
@@ -92,7 +105,7 @@ export default function Weather(props) {
               <button type="submit" className="btn btn-success go">
             Search
               </button>
-              <button type="button" className="btn btn-outline-info geolocation">
+              <button type="button" className="btn btn-outline-info geolocation" onClick={getGeolocation}>
                 <i className="fas fa-globe"></i>
               </button>
             </div>
