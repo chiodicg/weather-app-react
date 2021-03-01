@@ -55,8 +55,6 @@ export default function Weather(props) {
     setUnit("imperial");
     setDegree("ºF");
     setWindUnit("m/h");
-    console.log({unit});
-    console.log({degree});
   }
 
   useEffect(search, [unit]);
