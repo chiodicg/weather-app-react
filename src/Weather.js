@@ -99,10 +99,12 @@ export default function Weather(props) {
               onChange={updateCity}
               />
             </div>
-            <div className="col-3">
+            <div className="col-2">
               <button type="submit" className="btn btn-success go">
             Search
               </button>
+            </div>
+            <div className="col-1">
               <button type="button" className="btn btn-outline-info geolocation" onClick={getGeolocation}>
                 <i className="fas fa-globe"></i>
               </button>
