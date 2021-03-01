@@ -88,8 +88,8 @@ export default function Weather(props) {
           id="search-form"
           onSubmit={handleSubmit}
         >
-          <div className="row align-items-center">
-            <div className="col-6">
+          <div className="row align-items-center justify-content-center">
+            <div className="col-4">
               <input
               type="search"
               className="form-control"
