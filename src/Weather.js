@@ -12,7 +12,6 @@ export default function Weather(props) {
   const [unit, setUnit] = useState("metric");
   const [windUnit, setWindUnit] = useState("km/h");
   const [degree, setDegree] = useState("ºC");
-  const [geoOn, setGeoOn] = useState(false);
   const apiKey = "7de7d337ce8802b808862965eb088195";
 
   function showTemperature(response) {
@@ -32,22 +31,14 @@ export default function Weather(props) {
     });
   }
 
-  function search(position) {
-    if (geoOn) {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
-      let apiGeoUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`;
-      axios.get(apiGeoUrl).then(showTemperature);
-    } else {
-      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
-      axios.get(apiUrl).then(showTemperature);
-    }
+  function search() {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(showTemperature);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     if (city.length > 0) {
-      setGeoOn(false);
       search();
     } else {
       alert(`Enter a city`);
@@ -56,7 +47,6 @@ export default function Weather(props) {
 
   function updateCity(event) {
     event.preventDefault();
-    setGeoOn(false);
     setCity(event.target.value);
   }
 
@@ -68,7 +58,7 @@ export default function Weather(props) {
   }
 
   useEffect(search, [unit]);
-
+  
   function convertToCelsius(event) {
     event.preventDefault();
     setUnit("metric");
@@ -76,10 +66,16 @@ export default function Weather(props) {
     setWindUnit("km/h");
   }
 
+  function getCurrentLocation(position) {
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    let apiGeoUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiGeoUrl).then(showTemperature);
+  }
+
   function getGeolocation(event) {
     event.preventDefault();
-    setGeoOn(true);
-    navigator.geolocation.getCurrentPosition(search);
+    navigator.geolocation.getCurrentPosition(getCurrentLocation)
   }
 
   if (weather.ready) {
