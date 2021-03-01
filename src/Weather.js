@@ -99,9 +99,9 @@ export default function Weather(props) {
               onChange={updateCity}
               />
             </div>
-            <div className="col-2">
+            <div className="col-1">
               <button type="submit" className="btn btn-success go">
-            Search
+            Go
               </button>
             </div>
             <div className="col-1">
