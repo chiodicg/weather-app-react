@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import ForecastPreview from "./ForecastPreview";
@@ -22,24 +22,22 @@ export default function Forecast(props) {
     axios.get(apiForecastUrl).then(showForecast);
   }
 
-  useEffect(searchForecast, [unit]);
-
   if (loaded && props.lat === forecast.lat && props.lon === forecast.lon) {
     return (
       <div className="Forecast">
         <div className="row align-items-center forecast-1">
-          <ForecastPreview data={forecast.daily[1]} degreeUnit={props.degreeUnit} />
-          <ForecastPreview data={forecast.daily[2]} degreeUnit={props.degreeUnit} />
+          <ForecastPreview data={forecast.daily[1]} degreeUnit={props.degreeUnit} unit={unit} />
+          <ForecastPreview data={forecast.daily[2]} degreeUnit={props.degreeUnit} unit={unit} />
         </div>
         <br />
         <div className="row align-items-center forecast-2">
-          <ForecastPreview data={forecast.daily[3]} degreeUnit={props.degreeUnit}/>
-          <ForecastPreview data={forecast.daily[4]} degreeUnit={props.degreeUnit}/>
+          <ForecastPreview data={forecast.daily[3]} degreeUnit={props.degreeUnit} unit={unit} />
+          <ForecastPreview data={forecast.daily[4]} degreeUnit={props.degreeUnit} unit={unit} />
         </div>
         <br />
         <div className="row align-items-center forecast-3">
-          <ForecastPreview data={forecast.daily[5]} degreeUnit={props.degreeUnit}/>
-          <ForecastPreview data={forecast.daily[6]} degreeUnit={props.degreeUnit}/>
+          <ForecastPreview data={forecast.daily[5]} degreeUnit={props.degreeUnit} unit={unit} />
+          <ForecastPreview data={forecast.daily[6]} degreeUnit={props.degreeUnit} unit={unit} />
         </div>
       </div>)
 } else {
