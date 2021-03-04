@@ -12,7 +12,7 @@ export default function Weather(props) {
   const [unit, setUnit] = useState("metric");
   const [windUnit, setWindUnit] = useState("km/h");
   const [degree, setDegree] = useState("ºC");
-  const apiKey = "7de7d337ce8802b808862965eb088195";
+  const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
   function showTemperature(response) {
     setWeather({
@@ -33,7 +33,10 @@ export default function Weather(props) {
 
   function search() {
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
-    axios.get(apiUrl).then(showTemperature);
+    axios.get(apiUrl).then(showTemperature).catch((error) => {if (error.response && error.response.status === 404) {
+      console.clear();
+      alert("Please, check the city name");
+    }});
   }
 
   function handleSubmit(event) {
@@ -56,7 +59,10 @@ export default function Weather(props) {
     setDegree("ºF");
     setWindUnit("m/h");
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weather.city}&appid=${apiKey}&units=imperial`;
-    axios.get(apiUrl).then(showTemperature);
+    axios.get(apiUrl).then(showTemperature).catch((error) => {if (error.response && error.response.status === 404) {
+      console.clear();
+      alert("Please, check the city name");
+    }});
   }
   
   function convertToCelsius(event) {

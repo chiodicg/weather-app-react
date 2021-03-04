@@ -17,9 +17,12 @@ export default function Forecast(props) {
   }
 
   function searchForecast() {
-    let apiKey = "7de7d337ce8802b808862965eb088195";
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${props.lat}&lon=${props.lon}&appid=${apiKey}&units=${unit}`;
-    axios.get(apiForecastUrl).then(showForecast);
+    axios.get(apiForecastUrl).then(showForecast).catch((error) => {if (error.response && error.response.status === 404) {
+      console.clear();
+      alert("Please, check the city name");
+    }});
   }
 
   if (loaded && props.lat === forecast.lat && props.lon === forecast.lon) {
